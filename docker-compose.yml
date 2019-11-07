@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  node:
+    container_name: tracker-server
+    build:
+      context: .
+      dockerfile: ./docker/node/Dockerfile
+    links:
+      - postgres
+    depends_on:
+      - postgres
+    volumes:
+      - './src/:/app/src/'
+    ports:
+      - 8000:8000
+  postgres:
+    build:
+      context: .
+      dockerfile: ./docker/postgres/Dockerfile
+    container_name: tracker-cont-db
+    restart: always
+    ports:
+        - 5434:5432
+    environment:
+      POSTGRES_PASSWORD: 'password'
+      POSTGRES_USER: 'postgres'
+      POSTGRES_DB: 'tracker'
+    volumes:
+      - ./db:/var/lib/postgresql/data
