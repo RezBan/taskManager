@@ -6,7 +6,6 @@ import {
   CreateUserDTO,
   UserWithoutPasswordDTO,
 } from './dto/user.dto';
-const uuidv4 = require('uuid/v4');
 
 @Injectable()
 export class UserService {
