@@ -5,7 +5,7 @@ import { Task } from './task.entity';
 import { CreateTaskDTO, DeleteTaskDTO } from './dto/task.dto';
 
 interface queryDTO {
-  user?: number;
+  user?: string;
 }
 @Injectable()
 export class TaskService {
@@ -15,12 +15,8 @@ export class TaskService {
   ) {}
 
   async findAll(query: queryDTO): Promise<Task[]> {
-    const { user } = query;
     const allTasks = await this.taskRepository.find({
-      where: {
-        userId: user,
-        isDeleted: false,
-      }
+      relations: ["user"],
     });
     return allTasks;
   }
